@@ -1,0 +1,66 @@
+/**
+ * Plus Jakarta Sans - Font Lokal
+ * 
+ * Download font files dari:
+ * https://google-webfonts-helper.herokuapp.com/fonts/plus-jakarta-sans
+ * 
+ * Pilih charset: latin
+ * Pilih styles: 400, 500, 600, 700
+ * 
+ * Letakkan file .woff2 di folder yang sama dengan file CSS ini
+ */
+
+/* Plus Jakarta Sans - Regular (400) */
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local("Plus Jakarta Sans Regular"), local("PlusJakartaSans-Regular"),
+    url("PlusJakartaSans-Regular.woff2") format("woff2"),
+    url("PlusJakartaSans-Regular.woff") format("woff");
+}
+
+/* Plus Jakarta Sans - Medium (500) */
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: local("Plus Jakarta Sans Medium"), local("PlusJakartaSans-Medium"),
+    url("PlusJakartaSans-Medium.woff2") format("woff2"),
+    url("PlusJakartaSans-Medium.woff") format("woff");
+}
+
+/* Plus Jakarta Sans - SemiBold (600) */
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local("Plus Jakarta Sans SemiBold"), local("PlusJakartaSans-SemiBold"),
+    url("PlusJakartaSans-SemiBold.woff2") format("woff2"),
+    url("PlusJakartaSans-SemiBold.woff") format("woff");
+}
+
+/* Plus Jakarta Sans - Bold (700) */
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local("Plus Jakarta Sans Bold"), local("PlusJakartaSans-Bold"),
+    url("PlusJakartaSans-Bold.woff2") format("woff2"),
+    url("PlusJakartaSans-Bold.woff") format("woff");
+}
+
+/* Plus Jakarta Sans - ExtraBold (800) */
+@font-face {
+  font-family: "Plus Jakarta Sans";
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: local("Plus Jakarta Sans ExtraBold"), local("PlusJakartaSans-ExtraBold"),
+    url("PlusJakartaSans-ExtraBold.woff2") format("woff2"),
+    url("PlusJakartaSans-ExtraBold.woff") format("woff");
+}

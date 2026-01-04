@@ -1,68 +1,393 @@
-# CodeIgniter 4 Application Starter
+# 👑 Mandah Pelaminan
 
-## What is CodeIgniter?
+Sistem Manajemen Penyewaan Pelaminan berbasis CodeIgniter 4 dengan tampilan modern UI/UX 2026.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
+![PHP Version](https://img.shields.io/badge/PHP-8.1%2B-blue)
+![CodeIgniter](https://img.shields.io/badge/CodeIgniter-4.x-orange)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-purple)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+---
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## 📋 Deskripsi Proyek
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+**Mandah Pelaminan** adalah aplikasi web untuk mengelola bisnis penyewaan pelaminan (dekorasi pernikahan). Aplikasi ini mencakup:
 
-## Installation & updates
+- 📦 **Manajemen Master Data** - Paket, Pelaminan, Pelanggan, Users
+- 💰 **Transaksi** - Penyewaan, Pembayaran, Pengembalian
+- 📊 **Laporan** - Penyewaan, Keuangan, Logistik, Riwayat Pelanggan
+- 🔐 **Role-Based Access Control (RBAC)** - Admin, Petugas, Pelanggan
+- 🖨️ **Cetak Invoice** - Nota profesional siap cetak
+- 🌙 **Dark Mode** - Tampilan modern dengan toggle tema
+- 📱 **Responsive** - Optimal di desktop dan mobile
+- 🔌 **Offline Ready** - Semua aset tersimpan lokal
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+---
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+## ⚙️ Prasyarat (Prerequisites)
 
-## Setup
+Pastikan sistem Anda memenuhi persyaratan berikut:
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+| Komponen        | Versi Minimum  | Rekomendasi     |
+| --------------- | -------------- | --------------- |
+| PHP             | 8.1            | 8.2+            |
+| MySQL / MariaDB | 5.7 / 10.4     | 8.0 / 10.6+     |
+| Composer        | 2.0            | 2.5+            |
+| Web Server      | Apache / Nginx | Laragon / XAMPP |
 
-## Important Change with index.php
+### Ekstensi PHP yang Dibutuhkan:
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+- `intl`
+- `mbstring`
+- `json`
+- `mysqlnd`
+- `curl`
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+---
 
-**Please** read the user guide for a better explanation of how CI4 works!
+## 🚀 Langkah Instalasi
 
-## Repository Management
+### 1️⃣ Clone atau Ekstrak Proyek
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+**Via Git:**
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+```bash
+git clone https://github.com/username/mandah-pelaminan.git
+cd mandah-pelaminan
+```
 
-## Server Requirements
+**Via ZIP:**
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+- Download dan ekstrak file ZIP
+- Pindahkan folder ke direktori web server (misal: `htdocs` atau `www`)
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+---
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+### 2️⃣ Install Dependencies
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+Jalankan Composer untuk menginstall semua dependencies:
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+```bash
+composer install
+```
+
+Atau jika sudah ada `vendor` folder:
+
+```bash
+composer update
+```
+
+---
+
+### 3️⃣ Konfigurasi Environment
+
+**a. Salin file `.env`:**
+
+```bash
+# Windows
+copy env .env
+
+# Linux/Mac
+cp env .env
+```
+
+**b. Edit file `.env` dan sesuaikan konfigurasi:**
+
+```env
+#--------------------------------------------------------------------
+# ENVIRONMENT
+#--------------------------------------------------------------------
+CI_ENVIRONMENT = development
+
+#--------------------------------------------------------------------
+# APP
+#--------------------------------------------------------------------
+app.baseURL = 'http://localhost:8080/'
+
+#--------------------------------------------------------------------
+# DATABASE
+#--------------------------------------------------------------------
+database.default.hostname = localhost
+database.default.database = mandah_pelaminan
+database.default.username = root
+database.default.password =
+database.default.DBDriver = MySQLi
+database.default.DBPrefix =
+database.default.port = 3306
+```
+
+> ⚠️ **Penting:** Sesuaikan `app.baseURL` dengan URL server Anda.
+
+---
+
+### 4️⃣ Buat Database
+
+Buat database baru di MySQL/MariaDB:
+
+```sql
+CREATE DATABASE mandah_pelaminan CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+Atau via phpMyAdmin/HeidiSQL, buat database dengan nama `mandah_pelaminan`.
+
+---
+
+### 5️⃣ Jalankan Migrasi Database
+
+Migrasi akan membuat semua tabel yang dibutuhkan:
+
+```bash
+php spark migrate
+```
+
+Output yang diharapkan:
+
+```
+Running all new migrations...
+Done.
+```
+
+---
+
+### 6️⃣ Jalankan Seeder (Data Awal)
+
+Seeder akan mengisi data dummy untuk testing:
+
+```bash
+php spark db:seed MainSeeder
+```
+
+Output yang diharapkan:
+
+```
+Seeding: MainSeeder
+Seeded: MainSeeder
+```
+
+> 💡 **Tip:** MainSeeder akan menjalankan semua sub-seeder (Users, Pelanggan, Paket, Pelaminan, Transaksi).
+
+---
+
+### 7️⃣ Jalankan Aplikasi
+
+**Menggunakan PHP Built-in Server:**
+
+```bash
+php spark serve
+```
+
+Aplikasi akan berjalan di: **http://localhost:8080**
+
+**Menggunakan Laragon/XAMPP:**
+
+Akses langsung via browser: `http://localhost/mandah-pelaminan/public`
+
+---
+
+## 🔑 Akun Dummy (Login)
+
+Setelah menjalankan seeder, gunakan akun berikut untuk login:
+
+| Role          | Username    | Password       | Hak Akses                             |
+| ------------- | ----------- | -------------- | ------------------------------------- |
+| **Admin**     | `admin`     | `admin123`     | Full akses semua fitur                |
+| **Petugas**   | `petugas`   | `petugas123`   | Input transaksi & lihat laporan       |
+| **Pelanggan** | `pelanggan` | `pelanggan123` | Edit profil & lihat transaksi sendiri |
+
+---
+
+## 📁 Struktur Folder
+
+```
+mandah-pelaminan/
+├── app/
+│   ├── Config/          # Konfigurasi aplikasi
+│   ├── Controllers/     # Controller (Master, Transaksi, Laporan)
+│   ├── Database/
+│   │   ├── Migrations/  # File migrasi database
+│   │   └── Seeds/       # File seeder
+│   ├── Filters/         # Auth & Role filters
+│   ├── Helpers/         # Helper functions
+│   ├── Models/          # Model database
+│   ├── Validation/      # Custom validation rules
+│   └── Views/           # Template views
+│       ├── auth/        # Login page
+│       ├── dashboard.php
+│       ├── index.php    # Main layout
+│       ├── master/      # CRUD Master
+│       ├── transaksi/   # CRUD Transaksi
+│       ├── laporan/     # Laporan
+│       └── profil.php   # Edit profil
+├── public/
+│   ├── assets/          # Aset lokal (CSS, JS, Fonts)
+│   │   ├── css/
+│   │   ├── js/
+│   │   ├── fonts/
+│   │   └── vendor/
+│   └── index.php        # Entry point
+├── .env                 # Environment config
+├── composer.json
+└── README.md
+```
+
+---
+
+## 🎨 Struktur Aset (Offline Mode)
+
+Aplikasi ini dirancang untuk berjalan **100% offline** tanpa CDN eksternal.
+
+Semua aset tersimpan di `public/assets/`:
+
+```
+public/assets/
+├── css/
+│   ├── app.css              # Custom CSS aplikasi
+│   └── bootstrap.min.css    # Bootstrap 5
+├── js/
+│   ├── app.js               # Custom JavaScript
+│   ├── bootstrap.bundle.min.js
+│   └── datatables/          # DataTables plugin
+├── fonts/
+│   └── plus-jakarta-sans/   # Font lokal
+└── vendor/
+    ├── boxicons/            # Ikon Boxicons
+    └── css/                 # Template CSS
+```
+
+> 📖 Lihat `PANDUAN_OFFLINE_ASSETS.md` untuk panduan lengkap download aset.
+
+---
+
+## 🛠️ Perintah Spark Berguna
+
+```bash
+# Jalankan server development
+php spark serve
+
+# Jalankan migrasi
+php spark migrate
+
+# Rollback migrasi
+php spark migrate:rollback
+
+# Refresh migrasi (rollback + migrate)
+php spark migrate:refresh
+
+# Jalankan seeder
+php spark db:seed MainSeeder
+
+# Buat controller baru
+php spark make:controller NamaController
+
+# Buat model baru
+php spark make:model NamaModel
+
+# Buat migrasi baru
+php spark make:migration create_nama_table
+
+# Clear cache
+php spark cache:clear
+```
+
+---
+
+## 📊 Fitur Aplikasi
+
+### 👤 Berdasarkan Role:
+
+**Admin:**
+
+- ✅ Full CRUD semua data master
+- ✅ Full CRUD semua transaksi
+- ✅ Akses semua laporan
+- ✅ Manajemen users
+
+**Petugas:**
+
+- ✅ Lihat data master
+- ✅ Input penyewaan & pembayaran
+- ✅ Proses pengembalian
+- ✅ Akses laporan
+
+**Pelanggan:**
+
+- ✅ Edit profil sendiri
+- ✅ Lihat transaksi sendiri
+- ✅ Input penyewaan mandiri
+- ✅ Lihat riwayat transaksi
+
+---
+
+## 🔒 Keamanan
+
+- Password di-hash menggunakan `password_hash()` (bcrypt)
+- CSRF Protection aktif
+- Session-based authentication
+- Role-based access control di setiap controller
+- Validasi input ketat pada form penyewaan
+
+---
+
+## 🐛 Troubleshooting
+
+### Error: "Whoops! We seem to have hit a snag"
+
+- Pastikan `CI_ENVIRONMENT = development` di `.env` untuk melihat detail error
+
+### Error: Database connection
+
+- Cek konfigurasi database di `.env`
+- Pastikan MySQL/MariaDB sudah berjalan
+- Pastikan database sudah dibuat
+
+### Error: Class not found
+
+- Jalankan `composer dump-autoload`
+
+### Halaman blank / 500 Error
+
+- Cek permission folder `writable/` (chmod 777 di Linux)
+- Cek log error di `writable/logs/`
+
+---
+
+## 📝 Changelog
+
+### v1.0.0 (2026)
+
+- Initial release
+- CRUD Master (Paket, Pelaminan, Pelanggan, Users)
+- CRUD Transaksi (Penyewaan, Pembayaran, Pengembalian)
+- Laporan (Penyewaan, Keuangan, Logistik, Pelanggan)
+- Role-Based Access Control
+- Modern UI/UX 2026 dengan Dark Mode
+- Cetak Invoice
+- Offline-ready assets
+
+---
+
+## 👨‍💻 Developer
+
+**Guntur Lailam Yuro**
+
+---
+
+## 📄 Lisensi
+
+Proyek ini dilisensikan di bawah [MIT License](LICENSE).
+
+---
+
+## 🙏 Credits
+
+- [CodeIgniter 4](https://codeigniter.com/)
+- [Bootstrap 5](https://getbootstrap.com/)
+- [Boxicons](https://boxicons.com/)
+- [Sneat Template](https://themeselection.com/item/sneat-free-bootstrap-html-admin-template/)
+- [Plus Jakarta Sans Font](https://fonts.google.com/specimen/Plus+Jakarta+Sans)
+
+---
+
+<p align="center">
+  Made with ❤️ by Guntur Lailam Yuro
+</p>
