@@ -11,30 +11,6 @@
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
     }
 
-    .form-card-header {
-        padding: 1.25rem 1.5rem;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.1);
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-    }
-
-    .form-card-header h5 {
-        margin: 0;
-        font-weight: 600;
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .form-card-header h5 i {
-        color: #696cff;
-    }
-
-    .form-card-body {
-        padding: 1.5rem;
-    }
-
     .form-section {
         background: rgba(105, 108, 255, 0.03);
         border: 1px solid rgba(105, 108, 255, 0.1);
@@ -52,113 +28,24 @@
         gap: 0.5rem;
     }
 
-    .form-label {
-        font-weight: 500;
-        color: #475569;
-        margin-bottom: 0.5rem;
-    }
-
-    .form-label .required {
-        color: #ef4444;
-        margin-left: 2px;
-    }
-
-    .form-control,
-    .form-select {
-        border: 2px solid rgba(148, 163, 184, 0.2);
-        border-radius: 10px;
-        padding: 0.75rem 1rem;
-        transition: all 0.2s;
-    }
-
-    .form-control:focus,
-    .form-select:focus {
-        border-color: #696cff;
-        box-shadow: 0 0 0 3px rgba(105, 108, 255, 0.1);
-    }
-
-    .form-control.is-invalid,
-    .form-select.is-invalid {
-        border-color: #ef4444;
-        background-image: none;
-    }
-
-    .invalid-feedback {
-        color: #ef4444;
-        font-size: 0.8rem;
-        margin-top: 0.35rem;
-        display: flex;
-        align-items: center;
-        gap: 0.25rem;
-    }
-
-    .form-hint {
-        font-size: 0.8rem;
-        color: #94a3b8;
-        margin-top: 0.35rem;
-    }
-
-    .detail-row {
-        background: #fff;
-        border: 1px solid rgba(148, 163, 184, 0.15);
+    .pelaminan-info {
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.2);
         border-radius: 10px;
         padding: 1rem;
-        margin-bottom: 0.75rem;
+        margin-top: 0.5rem;
+        display: none;
     }
 
-    .btn-remove {
-        background: rgba(239, 68, 68, 0.1);
-        color: #ef4444;
-        border: none;
-        border-radius: 8px;
-        padding: 0.5rem 0.75rem;
-    }
-
-    .btn-remove:hover:not(:disabled) {
-        background: #ef4444;
-        color: white;
-    }
-
-    .btn-remove:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-    }
-
-    .btn-add-item {
+    .total-display {
         background: rgba(105, 108, 255, 0.1);
-        color: #696cff;
-        border: 2px dashed rgba(105, 108, 255, 0.3);
+        border: 1px solid rgba(105, 108, 255, 0.2);
         border-radius: 10px;
-        padding: 0.75rem 1.25rem;
-        font-weight: 500;
-    }
-
-    .btn-submit {
-        background: linear-gradient(135deg, #696cff 0%, #8b5cf6 100%);
-        border: none;
-        border-radius: 10px;
-        padding: 0.875rem 2rem;
+        padding: 1rem;
+        text-align: center;
+        font-size: 1.1rem;
         font-weight: 600;
-        color: white;
-        box-shadow: 0 4px 15px rgba(105, 108, 255, 0.3);
-    }
-
-    .btn-submit:hover {
-        transform: translateY(-2px);
-        color: white;
-    }
-
-    .alert-validation {
-        background: rgba(239, 68, 68, 0.1);
-        border: 1px solid rgba(239, 68, 68, 0.2);
-        border-radius: 12px;
-        padding: 1rem 1.25rem;
-        color: #dc2626;
-    }
-
-    .alert-validation ul {
-        margin: 0;
-        padding-left: 1.25rem;
+        color: #696cff;
     }
 </style>
 
@@ -168,16 +55,16 @@
     </h4>
 
     <?php if (session()->getFlashdata('error')): ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert" style="border-radius: 12px;">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <i class='bx bx-error-circle me-2'></i><?= session()->getFlashdata('error') ?>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
     <?php endif; ?>
 
     <?php if ($validation && $validation->getErrors()): ?>
-        <div class="alert-validation mb-4">
+        <div class="alert alert-danger">
             <strong><i class='bx bx-error me-1'></i> Terdapat kesalahan:</strong>
-            <ul class="mt-2">
+            <ul class="mt-2 mb-0">
                 <?php foreach ($validation->getErrors() as $error): ?>
                     <li><?= esc($error) ?></li>
                 <?php endforeach; ?>
@@ -186,28 +73,28 @@
     <?php endif; ?>
 
     <div class="form-card">
-        <div class="form-card-header">
-            <h5><i class='bx bx-edit'></i> <?= $title ?></h5>
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class='bx bx-edit'></i> <?= $title ?></h5>
             <a href="<?= site_url('transaksi/penyewaan') ?>" class="btn btn-outline-secondary btn-sm">
                 <i class="bx bx-arrow-back me-1"></i> Kembali
             </a>
         </div>
-        <div class="form-card-body">
+        <div class="card-body">
             <?php
             $isEdit = isset($penyewaan);
             $action = $isEdit ? site_url('transaksi/penyewaan/update/' . $penyewaan['id_sewa']) : site_url('transaksi/penyewaan/store');
             ?>
 
-            <form action="<?= $action ?>" method="POST" id="formPenyewaan">
+            <form action="<?= $action ?>" method="POST" enctype="multipart/form-data">
                 <?= csrf_field() ?>
 
+                <!-- Data Pelanggan -->
                 <div class="form-section">
                     <div class="form-section-title"><i class='bx bx-user'></i> Data Pelanggan</div>
                     <?php if (!isPelanggan()): ?>
                         <div class="mb-0">
-                            <label class="form-label">Pelanggan <span class="required">*</span></label>
-                            <select class="form-select <?= ($validation && $validation->hasError('id_pelanggan')) ? 'is-invalid' : '' ?>"
-                                name="id_pelanggan" <?= $isEdit ? 'disabled' : 'required' ?>>
+                            <label class="form-label">Pelanggan <span class="text-danger">*</span></label>
+                            <select class="form-select" name="id_pelanggan" required <?= $isEdit ? 'disabled' : '' ?>>
                                 <option value="">-- Pilih Pelanggan --</option>
                                 <?php foreach ($pelanggan as $p): ?>
                                     <option value="<?= $p['id_pelanggan'] ?>" <?= old('id_pelanggan', $penyewaan['id_pelanggan'] ?? '') == $p['id_pelanggan'] ? 'selected' : '' ?>>
@@ -215,61 +102,94 @@
                                     </option>
                                 <?php endforeach; ?>
                             </select>
-                            <?php if ($validation && $validation->hasError('id_pelanggan')): ?>
-                                <div class="invalid-feedback"><i class='bx bx-error-circle'></i> <?= $validation->getError('id_pelanggan') ?></div>
-                            <?php endif; ?>
                         </div>
                     <?php else: ?>
-                        <div class="alert alert-info mb-0" style="border-radius: 10px;">
+                        <div class="alert alert-info mb-0">
                             <i class='bx bx-info-circle me-1'></i> Penyewaan atas nama: <strong><?= session()->get('nama') ?></strong>
                         </div>
                     <?php endif; ?>
                 </div>
 
+                <!-- Pilih Pelaminan -->
+                <div class="form-section">
+                    <div class="form-section-title"><i class='bx bx-package'></i> Pilih Pelaminan</div>
+                    <div class="mb-3">
+                        <label class="form-label">Pelaminan <span class="text-danger">*</span></label>
+                        <select class="form-select" id="id_pelaminan" name="id_pelaminan" required <?= $isEdit ? 'disabled' : '' ?>>
+                            <option value="">-- Pilih Pelaminan --</option>
+                            <?php if (empty($pelaminan)): ?>
+                                <option value="" disabled>Tidak ada pelaminan yang tersedia</option>
+                            <?php else: ?>
+                                <?php foreach ($pelaminan as $item): ?>
+                                    <option value="<?= $item['id_pelaminan'] ?>"
+                                        data-harga="<?= $item['harga_sewa'] ?>"
+                                        data-nama="<?= esc($item['nama_pelaminan']) ?>"
+                                        data-jenis="<?= esc($item['jenis']) ?>"
+                                        data-warna="<?= esc($item['warna']) ?>"
+                                        data-kategori="<?= esc($item['nama_kategori'] ?? 'Tanpa Kategori') ?>"
+                                        <?= old('id_pelaminan', $penyewaan['id_pelaminan'] ?? '') == $item['id_pelaminan'] ? 'selected' : '' ?>>
+                                        [<?= esc($item['nama_kategori'] ?? 'Tanpa Kategori') ?>] <?= esc($item['nama_pelaminan']) ?> - Rp <?= number_format($item['harga_sewa'], 0, ',', '.') ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            <?php endif; ?>
+                        </select>
+                        <div class="form-text">Hanya pelaminan yang tersedia (tidak sedang disewa) yang ditampilkan</div>
+                    </div>
+
+                    <!-- Info Pelaminan -->
+                    <div class="pelaminan-info" id="pelaminan-info">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <strong>Detail Pelaminan:</strong><br>
+                                <span id="info-nama">-</span><br>
+                                <small class="text-muted">
+                                    Kategori: <span id="info-kategori">-</span> |
+                                    Jenis: <span id="info-jenis">-</span> |
+                                    Warna: <span id="info-warna">-</span>
+                                </small>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <strong>Harga Sewa:</strong><br>
+                                <span class="text-success fs-5" id="info-harga">Rp 0</span><br>
+                                <small class="text-muted">1 unit</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Jadwal Sewa -->
                 <div class="form-section">
                     <div class="form-section-title"><i class='bx bx-calendar'></i> Jadwal Sewa</div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Tanggal Sewa <span class="required">*</span></label>
-                            <input type="date" class="form-control <?= ($validation && $validation->hasError('tanggal_sewa')) ? 'is-invalid' : '' ?>"
-                                id="tanggal_sewa" name="tanggal_sewa"
+                            <label class="form-label">Tanggal Sewa <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="tanggal_sewa" name="tanggal_sewa"
                                 value="<?= old('tanggal_sewa', $penyewaan['tanggal_sewa'] ?? date('Y-m-d')) ?>"
                                 min="<?= date('Y-m-d') ?>" required>
-                            <?php if ($validation && $validation->hasError('tanggal_sewa')): ?>
-                                <div class="invalid-feedback"><i class='bx bx-error-circle'></i> <?= $validation->getError('tanggal_sewa') ?></div>
-                            <?php else: ?>
-                                <div class="form-hint">Tidak boleh sebelum hari ini</div>
-                            <?php endif; ?>
+                            <div class="form-text">Tidak boleh sebelum hari ini</div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label class="form-label">Tanggal Kembali <span class="required">*</span></label>
-                            <input type="date" class="form-control <?= ($validation && $validation->hasError('tanggal_kembali')) ? 'is-invalid' : '' ?>"
-                                id="tanggal_kembali" name="tanggal_kembali"
+                            <label class="form-label">Tanggal Kembali <span class="text-danger">*</span></label>
+                            <input type="date" class="form-control" id="tanggal_kembali" name="tanggal_kembali"
                                 value="<?= old('tanggal_kembali', $penyewaan['tanggal_kembali'] ?? '') ?>" required>
-                            <?php if ($validation && $validation->hasError('tanggal_kembali')): ?>
-                                <div class="invalid-feedback"><i class='bx bx-error-circle'></i> <?= $validation->getError('tanggal_kembali') ?></div>
-                            <?php else: ?>
-                                <div class="form-hint">Maksimal 7 hari dari tanggal sewa</div>
-                            <?php endif; ?>
+                            <div class="form-text">Maksimal 7 hari dari tanggal sewa</div>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="form-label">Alamat Acara <span class="required">*</span></label>
-                        <textarea class="form-control <?= ($validation && $validation->hasError('alamat_acara')) ? 'is-invalid' : '' ?>"
-                            name="alamat_acara" rows="2" placeholder="Alamat lengkap lokasi acara" required><?= old('alamat_acara', $penyewaan['alamat_acara'] ?? '') ?></textarea>
-                        <?php if ($validation && $validation->hasError('alamat_acara')): ?>
-                            <div class="invalid-feedback"><i class='bx bx-error-circle'></i> <?= $validation->getError('alamat_acara') ?></div>
-                        <?php else: ?>
-                            <div class="form-hint">Minimal 10 karakter</div>
-                        <?php endif; ?>
+                        <label class="form-label">Alamat Acara <span class="text-danger">*</span></label>
+                        <textarea class="form-control" name="alamat_acara" rows="2"
+                            placeholder="Alamat lengkap lokasi acara" required><?= old('alamat_acara', $penyewaan['alamat_acara'] ?? '') ?></textarea>
+                        <div class="form-text">Minimal 10 karakter</div>
                     </div>
                     <div class="mb-0">
                         <label class="form-label">Catatan</label>
-                        <textarea class="form-control" name="catatan" rows="2" placeholder="Catatan tambahan (opsional)"><?= old('catatan', $penyewaan['catatan'] ?? '') ?></textarea>
+                        <textarea class="form-control" name="catatan" rows="2"
+                            placeholder="Catatan tambahan (opsional)"><?= old('catatan', $penyewaan['catatan'] ?? '') ?></textarea>
                     </div>
                 </div>
 
                 <?php if ($isEdit): ?>
+                    <!-- Status -->
                     <div class="form-section">
                         <div class="form-section-title"><i class='bx bx-check-circle'></i> Status</div>
                         <select class="form-select" name="status_sewa" required>
@@ -279,66 +199,44 @@
                             <option value="batal" <?= ($penyewaan['status_sewa'] ?? '') == 'batal' ? 'selected' : '' ?>>Batal</option>
                         </select>
                     </div>
-                <?php endif; ?>
-
-                <?php if (!$isEdit): ?>
+                <?php else: ?>
+                    <!-- Pembayaran DP -->
                     <div class="form-section">
-                        <div class="form-section-title"><i class='bx bx-package'></i> Detail Pelaminan</div>
-                        <div id="detail-container">
-                            <div class="detail-row">
-                                <div class="row align-items-end">
-                                    <div class="col-md-6 mb-2 mb-md-0">
-                                        <label class="form-label">Pelaminan <span class="required">*</span></label>
-                                        <select class="form-select pelaminan-select" name="pelaminan_id[]" required>
-                                            <option value="">-- Pilih Pelaminan --</option>
-                                            <?php foreach ($pelaminan as $item): ?>
-                                                <option value="<?= $item['id_pelaminan'] ?>" data-harga="<?= $item['harga_sewa'] ?>">
-                                                    <?= esc($item['nama_pelaminan']) ?> - Rp <?= number_format($item['harga_sewa'], 0, ',', '.') ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4 mb-2 mb-md-0">
-                                        <label class="form-label">Jumlah <span class="required">*</span></label>
-                                        <input type="number" class="form-control" name="jumlah[]" min="1" value="1" required>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <button type="button" class="btn btn-remove w-100" disabled><i class="bx bx-trash"></i></button>
-                                    </div>
+                        <div class="form-section-title"><i class='bx bx-money'></i> Pembayaran DP (Opsional)</div>
+
+                        <!-- Info Minimal DP -->
+                        <div id="info-minimal-dp" style="display: none; background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 1px solid #f59e0b; border-radius: 10px; padding: 0.75rem 1rem; margin-bottom: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <i class='bx bx-info-circle' style="color: #b45309; font-size: 1.25rem;"></i>
+                                <div>
+                                    <div style="font-size: 0.85rem; color: #92400e; font-weight: 500;">Minimal DP (30%)</div>
+                                    <div id="minimal-dp-value" style="font-size: 1.1rem; font-weight: 700; color: #b45309;">Rp 0</div>
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-add-item w-100 mt-2" id="btn-add-detail">
-                            <i class="bx bx-plus me-1"></i> Tambah Item
-                        </button>
-                    </div>
 
-                    <div class="form-section">
-                        <div class="form-section-title"><i class='bx bx-money'></i> Pembayaran DP (Opsional)</div>
                         <div class="row">
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Jumlah DP</label>
                                 <div class="input-group">
                                     <span class="input-group-text">Rp</span>
-                                    <input type="number" class="form-control" name="dp_bayar" value="0" min="0">
+                                    <input type="number" class="form-control" id="dp_bayar" name="dp_bayar" value="0" min="0">
                                 </div>
-                                <div class="form-hint">Minimal 30% dari total. Kosongkan jika belum bayar.</div>
+                                <div class="form-text">Minimal 30% dari total. Kosongkan jika belum bayar.</div>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label class="form-label">Metode Pembayaran</label>
-                                <select class="form-select" name="metode_bayar">
-                                    <option value="tunai">Tunai</option>
-                                    <option value="transfer">Transfer Bank</option>
-                                    <option value="qris">QRIS</option>
-                                </select>
+                                <input type="text" class="form-control" value="💵 Tunai" disabled>
+                                <input type="hidden" name="metode_bayar" value="tunai">
                             </div>
                         </div>
+
                     </div>
                 <?php endif; ?>
 
                 <div class="d-flex justify-content-end gap-2 mt-4">
                     <a href="<?= site_url('transaksi/penyewaan') ?>" class="btn btn-outline-secondary">Batal</a>
-                    <button type="submit" class="btn-submit">
+                    <button type="submit" class="btn btn-primary">
                         <i class="bx bx-save me-1"></i> <?= $isEdit ? 'Update' : 'Simpan' ?>
                     </button>
                 </div>
@@ -349,11 +247,52 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const container = document.getElementById('detail-container');
-        const btnAdd = document.getElementById('btn-add-detail');
+        const pelaminanSelect = document.getElementById('id_pelaminan');
+        const pelaminanInfo = document.getElementById('pelaminan-info');
         const tanggalSewa = document.getElementById('tanggal_sewa');
         const tanggalKembali = document.getElementById('tanggal_kembali');
+        const infoMinimalDp = document.getElementById('info-minimal-dp');
+        const minimalDpValue = document.getElementById('minimal-dp-value');
+        const dpInput = document.getElementById('dp_bayar');
 
+        // Update info pelaminan dan minimal DP
+        function updatePelaminanInfo() {
+            const selected = pelaminanSelect.selectedOptions[0];
+            if (selected && selected.value) {
+                const harga = parseInt(selected.dataset.harga);
+
+                document.getElementById('info-nama').textContent = selected.dataset.nama;
+                document.getElementById('info-kategori').textContent = selected.dataset.kategori;
+                document.getElementById('info-jenis').textContent = selected.dataset.jenis;
+                document.getElementById('info-warna').textContent = selected.dataset.warna;
+                document.getElementById('info-harga').textContent = 'Rp ' + harga.toLocaleString('id-ID');
+
+                pelaminanInfo.style.display = 'block';
+
+                // Hitung dan tampilkan minimal DP (30%)
+                const minimalDp = Math.ceil(harga * 0.3);
+                if (minimalDpValue) {
+                    minimalDpValue.textContent = 'Rp ' + minimalDp.toLocaleString('id-ID');
+                    infoMinimalDp.style.display = 'block';
+                }
+
+                // Set min value untuk input DP
+                if (dpInput) {
+                    dpInput.setAttribute('data-min-dp', minimalDp);
+                    dpInput.setAttribute('data-max-dp', harga);
+                }
+            } else {
+                pelaminanInfo.style.display = 'none';
+                if (infoMinimalDp) {
+                    infoMinimalDp.style.display = 'none';
+                }
+            }
+        }
+
+        // Event listeners
+        pelaminanSelect?.addEventListener('change', updatePelaminanInfo);
+
+        // Validasi tanggal
         tanggalSewa?.addEventListener('change', function() {
             tanggalKembali.min = this.value;
             const sewaDate = new Date(this.value);
@@ -364,29 +303,9 @@
             }
         });
 
+        // Initialize
         if (tanggalSewa?.value) tanggalSewa.dispatchEvent(new Event('change'));
-
-        btnAdd?.addEventListener('click', function() {
-            const row = container.querySelector('.detail-row').cloneNode(true);
-            row.querySelector('select').value = '';
-            row.querySelector('input').value = '1';
-            row.querySelector('.btn-remove').disabled = false;
-            container.appendChild(row);
-            updateRemoveButtons();
-        });
-
-        container?.addEventListener('click', function(e) {
-            if (e.target.closest('.btn-remove')) {
-                const rows = container.querySelectorAll('.detail-row');
-                if (rows.length > 1) e.target.closest('.detail-row').remove();
-                updateRemoveButtons();
-            }
-        });
-
-        function updateRemoveButtons() {
-            const rows = container.querySelectorAll('.detail-row');
-            rows.forEach(row => row.querySelector('.btn-remove').disabled = rows.length === 1);
-        }
+        updatePelaminanInfo();
     });
 </script>
 

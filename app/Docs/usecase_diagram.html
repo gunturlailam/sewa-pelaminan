@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Use Case Diagram - Mandah Pelaminan</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        min-height: 100vh;
+        padding: 20px;
+      }
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+      h1 {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 5px;
+        font-size: 24px;
+      }
+      .subtitle {
+        text-align: center;
+        color: rgba(255, 255, 255, 0.7);
+        margin-bottom: 20px;
+        font-size: 13px;
+      }
+      .diagram-wrapper {
+        background: #fff;
+        border-radius: 15px;
+        padding: 20px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      }
+      svg {
+        display: block;
+        margin: 0 auto;
+      }
+      .actor-label {
+        font-size: 12px;
+        font-weight: bold;
+        fill: #333;
+      }
+      .usecase {
+        fill: #fff;
+        stroke: #333;
+        stroke-width: 2;
+      }
+      .usecase-master {
+        fill: #e8f5e9;
+      }
+      .usecase-transaksi {
+        fill: #e3f2fd;
+      }
+      .usecase-laporan {
+        fill: #fff3e0;
+      }
+      .usecase-akun {
+        fill: #fce4ec;
+      }
+      .usecase-auth {
+        fill: #f3e5f5;
+      }
+      .usecase-text {
+        font-size: 10px;
+        fill: #333;
+        text-anchor: middle;
+      }
+      .line-solid {
+        stroke: #333;
+        stroke-width: 1.5;
+        fill: none;
+      }
+      .line-dashed {
+        stroke: #888;
+        stroke-width: 1;
+        stroke-dasharray: 4, 3;
+        fill: none;
+      }
+      .line-include {
+        stroke: #666;
+        stroke-width: 1;
+        stroke-dasharray: 3, 3;
+        fill: none;
+      }
+      .include-text {
+        font-size: 8px;
+        fill: #666;
+        font-style: italic;
+      }
+      .boundary {
+        fill: none;
+        stroke: #333;
+        stroke-width: 2;
+        stroke-dasharray: 8, 4;
+      }
+      .boundary-title {
+        font-size: 14px;
+        font-weight: bold;
+        fill: #333;
+      }
+      .legend-box {
+        fill: #f9f9f9;
+        stroke: #ddd;
+        stroke-width: 1;
+      }
+      .legend-title {
+        font-size: 11px;
+        font-weight: bold;
+        fill: #333;
+      }
+      .legend-text {
+        font-size: 9px;
+        fill: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>📊 Use Case Diagram</h1>
+      <p class="subtitle">
+        Sistem Penyewaan Mandah Pelaminan - Pelaminan Khas Minang
+      </p>
+
+      <div class="diagram-wrapper">
+        <svg width="1100" height="750" viewBox="0 0 1100 750">
+          <!-- System Boundary -->
+          <rect
+            x="180"
+            y="30"
+            width="740"
+            height="680"
+            rx="15"
+            class="boundary"
+          />
+          <text x="550" y="55" class="boundary-title" text-anchor="middle">
+            Sistem Penyewaan Mandah Pelaminan
+          </text>
+
+          <!-- ==================== ACTORS ==================== -->
+          <!-- Admin Actor (Left) -->
+          <g transform="translate(70, 280)">
+            <circle
+              cx="20"
+              cy="10"
+              r="12"
+              fill="none"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <line
+              x1="20"
+              y1="22"
+              x2="20"
+              y2="50"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <line
+              x1="0"
+              y1="35"
+              x2="40"
+              y2="35"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <line
+              x1="20"
+              y1="50"
+              x2="5"
+              y2="75"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <line
+              x1="20"
+              y1="50"
+              x2="35"
+              y2="75"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <text x="20" y="95" class="actor-label" text-anchor="middle">
+              Admin
+            </text>
+          </g>
+
+          <!-- Petugas Actor (Left Bottom) -->
+          <g transform="translate(70, 480)">
+            <circle
+              cx="20"
+              cy="10"
+              r="12"
+              fill="none"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <line
+              x1="20"
+              y1="22"
+              x2="20"
+              y2="50"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <line
+              x1="0"
+              y1="35"
+              x2="40"
+              y2="35"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <line
+              x1="20"
+              y1="50"
+              x2="5"
+              y2="75"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <line
+              x1="20"
+              y1="50"
+              x2="35"
+              y2="75"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <text x="20" y="95" class="actor-label" text-anchor="middle">
+              Petugas
+            </text>
+          </g>
+
+          <!-- Pelanggan Actor (Right) -->
+          <g transform="translate(1010, 350)">
+            <circle
+              cx="20"
+              cy="10"
+              r="12"
+              fill="none"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <line
+              x1="20"
+              y1="22"
+              x2="20"
+              y2="50"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <line
+              x1="0"
+              y1="35"
+              x2="40"
+              y2="35"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <line
+              x1="20"
+              y1="50"
+              x2="5"
+              y2="75"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <line
+              x1="20"
+              y1="50"
+              x2="35"
+              y2="75"
+              stroke="#333"
+              stroke-width="2"
+            />
+            <text x="20" y="95" class="actor-label" text-anchor="middle">
+              Pelanggan
+            </text>
+          </g>
+
+          <!-- ==================== USE CASES ==================== -->
+          <!-- Master Data (Left Column) -->
+          <ellipse
+            cx="280"
+            cy="100"
+            rx="70"
+            ry="25"
+            class="usecase usecase-master"
+          />
+          <text x="280" y="104" class="usecase-text">Kelola Kategori</text>
+
+          <ellipse
+            cx="280"
+            cy="170"
+            rx="70"
+            ry="25"
+            class="usecase usecase-master"
+          />
+          <text x="280" y="174" class="usecase-text">Kelola Pelaminan</text>
+
+          <ellipse
+            cx="280"
+            cy="240"
+            rx="70"
+            ry="25"
+            class="usecase usecase-master"
+          />
+          <text x="280" y="244" class="usecase-text">Kelola Pelanggan</text>
+
+          <ellipse
+            cx="280"
+            cy="310"
+            rx="70"
+            ry="25"
+            class="usecase usecase-master"
+          />
+          <text x="280" y="314" class="usecase-text">Kelola Users</text>
+
+          <!-- Transaksi (Center Column) -->
+          <ellipse
+            cx="550"
+            cy="140"
+            rx="75"
+            ry="25"
+            class="usecase usecase-transaksi"
+          />
+          <text x="550" y="144" class="usecase-text">Kelola Penyewaan</text>
+
+          <ellipse
+            cx="550"
+            cy="220"
+            rx="75"
+            ry="25"
+            class="usecase usecase-transaksi"
+          />
+          <text x="550" y="224" class="usecase-text">Kelola Pembayaran</text>
+
+          <ellipse
+            cx="550"
+            cy="300"
+            rx="80"
+            ry="25"
+            class="usecase usecase-transaksi"
+          />
+          <text x="550" y="304" class="usecase-text">Kelola Pengembalian</text>
+
+          <!-- Login (Center) -->
+          <ellipse
+            cx="550"
+            cy="400"
+            rx="55"
+            ry="25"
+            class="usecase usecase-auth"
+          />
+          <text x="550" y="404" class="usecase-text">Login</text>
+
+          <!-- Laporan (Right Column) -->
+          <ellipse
+            cx="820"
+            cy="100"
+            rx="75"
+            ry="25"
+            class="usecase usecase-laporan"
+          />
+          <text x="820" y="104" class="usecase-text">Laporan Penyewaan</text>
+
+          <ellipse
+            cx="820"
+            cy="170"
+            rx="75"
+            ry="25"
+            class="usecase usecase-laporan"
+          />
+          <text x="820" y="174" class="usecase-text">Laporan Keuangan</text>
+
+          <ellipse
+            cx="820"
+            cy="240"
+            rx="70"
+            ry="25"
+            class="usecase usecase-laporan"
+          />
+          <text x="820" y="244" class="usecase-text">Laporan Logistik</text>
+
+          <ellipse
+            cx="820"
+            cy="310"
+            rx="75"
+            ry="25"
+            class="usecase usecase-laporan"
+          />
+          <text x="820" y="314" class="usecase-text">Laporan Pelanggan</text>
+
+          <!-- Akun (Bottom) -->
+          <ellipse
+            cx="450"
+            cy="520"
+            rx="60"
+            ry="25"
+            class="usecase usecase-akun"
+          />
+          <text x="450" y="524" class="usecase-text">Kelola Profil</text>
+
+          <ellipse
+            cx="650"
+            cy="520"
+            rx="60"
+            ry="25"
+            class="usecase usecase-akun"
+          />
+          <text x="650" y="524" class="usecase-text">Lihat Riwayat</text>
+
+          <ellipse
+            cx="550"
+            cy="600"
+            rx="55"
+            ry="25"
+            class="usecase usecase-akun"
+          />
+          <text x="550" y="604" class="usecase-text">Dashboard</text>
+
+          <!-- ==================== ADMIN LINES (Full Access) ==================== -->
+          <!-- Admin to Master -->
+          <line x1="110" y1="310" x2="210" y2="100" class="line-solid" />
+          <line x1="110" y1="310" x2="210" y2="170" class="line-solid" />
+          <line x1="110" y1="310" x2="210" y2="240" class="line-solid" />
+          <line x1="110" y1="310" x2="210" y2="310" class="line-solid" />
+
+          <!-- Admin to Transaksi -->
+          <line x1="110" y1="320" x2="475" y2="140" class="line-solid" />
+          <line x1="110" y1="320" x2="475" y2="220" class="line-solid" />
+          <line x1="110" y1="320" x2="470" y2="300" class="line-solid" />
+
+          <!-- Admin to Laporan -->
+          <line x1="110" y1="330" x2="745" y2="100" class="line-solid" />
+          <line x1="110" y1="330" x2="745" y2="170" class="line-solid" />
+          <line x1="110" y1="330" x2="750" y2="240" class="line-solid" />
+          <line x1="110" y1="330" x2="745" y2="310" class="line-solid" />
+
+          <!-- Admin to Akun -->
+          <line x1="110" y1="340" x2="390" y2="520" class="line-solid" />
+          <line x1="110" y1="350" x2="495" y2="600" class="line-solid" />
+
+          <!-- ==================== PETUGAS LINES ==================== -->
+          <!-- Petugas to Master (View Only - Dashed) -->
+          <line x1="110" y1="510" x2="210" y2="100" class="line-dashed" />
+          <line x1="110" y1="510" x2="210" y2="170" class="line-dashed" />
+          <line x1="110" y1="510" x2="210" y2="240" class="line-dashed" />
+
+          <!-- Petugas to Transaksi (Full Access) -->
+          <line x1="110" y1="520" x2="475" y2="140" class="line-solid" />
+          <line x1="110" y1="520" x2="475" y2="220" class="line-solid" />
+          <line x1="110" y1="520" x2="470" y2="300" class="line-solid" />
+
+          <!-- Petugas to Laporan (Full Access) -->
+          <line x1="110" y1="530" x2="745" y2="100" class="line-solid" />
+          <line x1="110" y1="530" x2="745" y2="170" class="line-solid" />
+          <line x1="110" y1="530" x2="750" y2="240" class="line-solid" />
+          <line x1="110" y1="530" x2="745" y2="310" class="line-solid" />
+
+          <!-- Petugas to Akun -->
+          <line x1="110" y1="540" x2="390" y2="520" class="line-solid" />
+          <line x1="110" y1="550" x2="495" y2="600" class="line-solid" />
+
+          <!-- ==================== PELANGGAN LINES ==================== -->
+          <!-- Pelanggan to Penyewaan (Full - own data) -->
+          <line x1="1010" y1="380" x2="625" y2="140" class="line-solid" />
+
+          <!-- Pelanggan to Pembayaran & Pengembalian (View Only) -->
+          <line x1="1010" y1="385" x2="625" y2="220" class="line-dashed" />
+          <line x1="1010" y1="390" x2="630" y2="300" class="line-dashed" />
+
+          <!-- Pelanggan to Akun -->
+          <line x1="1010" y1="400" x2="510" y2="520" class="line-solid" />
+          <line x1="1010" y1="405" x2="710" y2="520" class="line-solid" />
+          <line x1="1010" y1="410" x2="605" y2="600" class="line-solid" />
+
+          <!-- ==================== INCLUDE LINES TO LOGIN ==================== -->
+          <line x1="550" y1="165" x2="550" y2="375" class="line-include" />
+          <text x="560" y="280" class="include-text">«include»</text>
+
+          <line x1="280" y1="125" x2="500" y2="385" class="line-include" />
+          <text x="350" y="270" class="include-text">«include»</text>
+
+          <line x1="820" y1="125" x2="600" y2="385" class="line-include" />
+          <text x="730" y="270" class="include-text">«include»</text>
+
+          <line x1="450" y1="495" x2="520" y2="420" class="line-include" />
+          <line x1="650" y1="495" x2="580" y2="420" class="line-include" />
+
+          <!-- ==================== LEGEND ==================== -->
+          <rect
+            x="200"
+            y="640"
+            width="700"
+            height="70"
+            rx="8"
+            class="legend-box"
+          />
+          <text x="550" y="660" class="legend-title" text-anchor="middle">
+            Keterangan
+          </text>
+
+          <!-- Legend Items -->
+          <line x1="220" y1="680" x2="260" y2="680" class="line-solid" />
+          <text x="270" y="684" class="legend-text">Full Access (CRUD)</text>
+
+          <line x1="390" y1="680" x2="430" y2="680" class="line-dashed" />
+          <text x="440" y="684" class="legend-text">View Only</text>
+
+          <line x1="530" y1="680" x2="570" y2="680" class="line-include" />
+          <text x="580" y="684" class="legend-text">«include»</text>
+
+          <!-- Color Legend -->
+          <rect
+            x="660"
+            y="672"
+            width="15"
+            height="15"
+            rx="3"
+            class="usecase usecase-master"
+          />
+          <text x="680" y="684" class="legend-text">Master</text>
+
+          <rect
+            x="720"
+            y="672"
+            width="15"
+            height="15"
+            rx="3"
+            class="usecase usecase-transaksi"
+          />
+          <text x="740" y="684" class="legend-text">Transaksi</text>
+
+          <rect
+            x="795"
+            y="672"
+            width="15"
+            height="15"
+            rx="3"
+            class="usecase usecase-laporan"
+          />
+          <text x="815" y="684" class="legend-text">Laporan</text>
+
+          <rect
+            x="865"
+            y="672"
+            width="15"
+            height="15"
+            rx="3"
+            class="usecase usecase-akun"
+          />
+          <text x="885" y="684" class="legend-text">Akun</text>
+        </svg>
+      </div>
+    </div>
+  </body>
+</html>

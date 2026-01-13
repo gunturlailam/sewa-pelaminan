@@ -473,19 +473,16 @@
                 </tr>
             </thead>
             <tbody>
-                <?php $no = 1;
-                foreach ($detail as $item): ?>
-                    <tr>
-                        <td><?= $no++ ?></td>
-                        <td>
-                            <div class="item-name"><?= esc($item['nama_pelaminan']) ?></div>
-                            <div class="item-desc"><?= esc($item['jenis'] ?? '') ?> <?= !empty($item['warna']) ? '• ' . esc($item['warna']) : '' ?></div>
-                        </td>
-                        <td style="text-align: center;"><?= $item['jumlah'] ?></td>
-                        <td>Rp <?= number_format($item['harga_sewa'] ?? ($item['subtotal'] / $item['jumlah']), 0, ',', '.') ?></td>
-                        <td>Rp <?= number_format($item['subtotal'], 0, ',', '.') ?></td>
-                    </tr>
-                <?php endforeach; ?>
+                <tr>
+                    <td>1</td>
+                    <td>
+                        <div class="item-name"><?= esc($penyewaan['nama_pelaminan'] ?? '-') ?></div>
+                        <div class="item-desc"><?= esc($penyewaan['jenis'] ?? '') ?> <?= !empty($penyewaan['warna']) ? '• ' . esc($penyewaan['warna']) : '' ?></div>
+                    </td>
+                    <td style="text-align: center;">1</td>
+                    <td>Rp <?= number_format($penyewaan['harga_sewa'] ?? 0, 0, ',', '.') ?></td>
+                    <td>Rp <?= number_format($penyewaan['harga_sewa'] ?? 0, 0, ',', '.') ?></td>
+                </tr>
             </tbody>
         </table>
 

@@ -21,12 +21,21 @@ class Pengembalian extends Migration
             ],
             'kondisi' => [
                 'type' => 'ENUM',
-                'constraint' => ['baik', 'rusak']
+                'constraint' => ['baik', 'rusak', 'hilang'],
+                'default' => 'baik'
             ],
             'denda' => [
                 'type' => 'DECIMAL',
                 'constraint' => '12,2',
                 'default' => 0
+            ],
+            'keterangan' => [
+                'type' => 'TEXT',
+                'null' => true
+            ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => true
             ],
         ]);
 

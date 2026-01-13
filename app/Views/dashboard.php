@@ -324,38 +324,13 @@
 
     <!-- Content Grid -->
     <div class="content-grid">
-        <!-- Paket Pelaminan -->
+        <!-- Daftar Pelaminan -->
         <div class="card animate-fade-in" style="animation-delay: 0.5s">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h6 class="mb-0 fw-semibold"><i class='bx bx-package me-2'></i>Paket Pelaminan</h6>
-                <a href="<?= site_url('master/paket') ?>" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
-            </div>
-            <div class="card-body">
-                <?php if (empty($paketTerbaru)): ?>
-                    <div class="text-center text-muted py-4">
-                        <i class='bx bx-package' style="font-size: 2.5rem; opacity: 0.3;"></i>
-                        <p class="mt-2 mb-0">Belum ada data paket</p>
-                    </div>
-                <?php else: ?>
-                    <?php foreach ($paketTerbaru as $paket): ?>
-                        <div class="list-item">
-                            <div class="list-icon purple"><i class='bx bx-package'></i></div>
-                            <div class="list-content">
-                                <div class="list-title"><?= esc($paket['nama_paket']) ?></div>
-                                <div class="list-subtitle"><?= esc(substr($paket['deskripsi'] ?? '', 0, 35)) ?>...</div>
-                            </div>
-                            <span class="badge badge-primary">Rp <?= number_format($paket['harga_paket'], 0, ',', '.') ?></span>
-                        </div>
-                    <?php endforeach; ?>
-                <?php endif; ?>
-            </div>
-        </div>
-
-        <!-- Daftar Pelaminan -->
-        <div class="card animate-fade-in" style="animation-delay: 0.6s">
-            <div class="card-header d-flex justify-content-between align-items-center">
                 <h6 class="mb-0 fw-semibold"><i class='bx bx-crown me-2'></i>Daftar Pelaminan</h6>
-                <a href="<?= site_url('master/pelaminan') ?>" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
+                <?php if (hasRole(['admin', 'petugas'])): ?>
+                    <a href="<?= site_url('master/pelaminan') ?>" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
+                <?php endif; ?>
             </div>
             <div class="card-body">
                 <?php if (empty($pelaminanList)): ?>
@@ -375,6 +350,35 @@
                             </div>
                             <span class="badge <?= ($item['status'] ?? '') == 'tersedia' ? 'badge-success' : 'badge-warning' ?>">
                                 <?= ucfirst($item['status'] ?? 'N/A') ?>
+                            </span>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+            </div>
+        </div>
+
+        <!-- Transaksi Terbaru -->
+        <div class="card animate-fade-in" style="animation-delay: 0.6s">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h6 class="mb-0 fw-semibold"><i class='bx bx-receipt me-2'></i>Transaksi Terbaru</h6>
+                <a href="<?= site_url('transaksi/penyewaan') ?>" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
+            </div>
+            <div class="card-body">
+                <?php if (empty($transaksiTerbaru)): ?>
+                    <div class="text-center text-muted py-4">
+                        <i class='bx bx-receipt' style="font-size: 2.5rem; opacity: 0.3;"></i>
+                        <p class="mt-2 mb-0">Belum ada transaksi</p>
+                    </div>
+                <?php else: ?>
+                    <?php foreach ($transaksiTerbaru as $trx): ?>
+                        <div class="list-item">
+                            <div class="list-icon purple"><i class='bx bx-receipt'></i></div>
+                            <div class="list-content">
+                                <div class="list-title">#<?= str_pad($trx['id_sewa'], 5, '0', STR_PAD_LEFT) ?> - <?= esc($trx['nama_pelanggan'] ?? 'N/A') ?></div>
+                                <div class="list-subtitle"><?= date('d M Y', strtotime($trx['tanggal_sewa'])) ?></div>
+                            </div>
+                            <span class="badge <?= $trx['status_sewa'] == 'selesai' ? 'badge-success' : ($trx['status_sewa'] == 'batal' ? 'bg-danger' : 'badge-warning') ?>">
+                                <?= ucfirst($trx['status_sewa']) ?>
                             </span>
                         </div>
                     <?php endforeach; ?>

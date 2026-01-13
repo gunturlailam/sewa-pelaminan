@@ -81,14 +81,12 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($detail as $d): ?>
-                                <tr>
-                                    <td><?= esc($d['nama_pelaminan']) ?></td>
-                                    <td>Rp <?= number_format($d['harga_sewa'], 0, ',', '.') ?></td>
-                                    <td><?= $d['jumlah'] ?></td>
-                                    <td>Rp <?= number_format($d['subtotal'], 0, ',', '.') ?></td>
-                                </tr>
-                            <?php endforeach; ?>
+                            <tr>
+                                <td><?= esc($penyewaan['nama_pelaminan'] ?? '-') ?></td>
+                                <td>Rp <?= number_format($penyewaan['harga_sewa'] ?? 0, 0, ',', '.') ?></td>
+                                <td>1</td>
+                                <td>Rp <?= number_format($penyewaan['harga_sewa'] ?? 0, 0, ',', '.') ?></td>
+                            </tr>
                         </tbody>
                         <tfoot>
                             <tr>

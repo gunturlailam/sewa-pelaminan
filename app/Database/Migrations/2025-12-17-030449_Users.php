@@ -33,6 +33,8 @@ class Users extends Migration
             'foto' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
+                'default' => 'default.png',
+                'null' => true
             ],
             'no_hp' => [
                 'type' => 'VARCHAR',

@@ -28,11 +28,10 @@ class UserModel extends Model
     // Validation
     protected $validationRules = [
         'nama'     => 'required|min_length[3]|max_length[100]',
-        'username' => 'required|min_length[3]|max_length[50]|is_unique[users.username,id_user,{id_user}]',
-        'password' => 'required|min_length[6]',
+        'username' => 'required|min_length[3]|max_length[50]',
         'role'     => 'required|in_list[admin,petugas,pelanggan]',
-        'no_hp'    => 'required|min_length[10]|max_length[15]',
-        'alamat'   => 'required',
+        'no_hp'    => 'permit_empty|min_length[10]|max_length[15]',
+        'alamat'   => 'permit_empty',
     ];
 
     protected $validationMessages = [
@@ -41,5 +40,5 @@ class UserModel extends Model
         ]
     ];
 
-    protected $skipValidation = false;
+    protected $skipValidation = true; // Skip validation by default, validate manually in controller
 }

@@ -64,7 +64,7 @@
         <div class="col-md-4">
             <div class="card bg-info text-white">
                 <div class="card-body">
-                    <h6 class="text-white mb-1">Transfer</h6>
+                    <h6 class="text-white mb-1">Transfer Bank</h6>
                     <h3 class="text-white mb-0">Rp <?= number_format($totalTransfer, 0, ',', '.') ?></h3>
                 </div>
             </div>
@@ -102,15 +102,13 @@
                                 <td><?= date('d/m/Y', strtotime($p['tanggal_bayar'])) ?></td>
                                 <td><?= esc($p['nama_pelanggan']) ?></td>
                                 <td>
-                                    <span class="badge bg-<?= $p['metode'] == 'tunai' ? 'success' : 'info' ?>">
-                                        <?= ucfirst($p['metode']) ?>
+                                    <span class="badge bg-<?= $p['metode_bayar'] == 'tunai' ? 'success' : 'info' ?>">
+                                        <?= ucfirst($p['metode_bayar']) ?>
                                     </span>
                                 </td>
                                 <td>Rp <?= number_format($p['jumlah_bayar'], 0, ',', '.') ?></td>
                                 <td>
-                                    <span class="badge bg-<?= $p['status_bayar'] == 'lunas' ? 'success' : 'warning' ?>">
-                                        <?= ucfirst($p['status_bayar']) ?>
-                                    </span>
+                                    <span class="badge bg-success">Lunas</span>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

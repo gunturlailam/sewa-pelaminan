@@ -19,18 +19,22 @@ class Pembayaran extends Migration
             'tanggal_bayar' => [
                 'type' => 'DATE'
             ],
-            'metode' => [
-                'type' => 'ENUM',
-                'constraint' => ['tunai', 'transfer']
-            ],
             'jumlah_bayar' => [
                 'type' => 'DECIMAL',
                 'constraint' => '12,2'
             ],
-            'status_bayar' => [
+            'metode_bayar' => [
                 'type' => 'ENUM',
-                'constraint' => ['lunas', 'belum'],
-                'default' => 'belum'
+                'constraint' => ['tunai', 'transfer', 'debit', 'kredit'],
+                'default' => 'tunai'
+            ],
+            'keterangan' => [
+                'type' => 'TEXT',
+                'null' => true
+            ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => true
             ],
         ]);
 

@@ -9,7 +9,7 @@ class PenyewaanRules
     /**
      * Cek apakah pelanggan_id ada di database
      */
-    public function pelanggan_exists(string $str, string $fields, array $data): bool
+    public function pelanggan_exists(string $str, ?string $fields = null, array $data = []): bool
     {
         $db = Database::connect();
         $result = $db->table('pelanggan')
@@ -21,7 +21,7 @@ class PenyewaanRules
     /**
      * Cek apakah user (petugas) aktif
      */
-    public function user_aktif(string $str, string $fields, array $data): bool
+    public function user_aktif(string $str, ?string $fields = null, array $data = []): bool
     {
         $db = Database::connect();
         $result = $db->table('users')
@@ -35,7 +35,7 @@ class PenyewaanRules
      * Cek apakah pelaminan tersedia (tidak sedang disewa pada tanggal tersebut)
      * Format: pelaminan_tersedia[tanggal_sewa,tanggal_kembali]
      */
-    public function pelaminan_tersedia(string $str, string $fields, array $data): bool
+    public function pelaminan_tersedia(string $str, ?string $fields = null, array $data = []): bool
     {
         if (empty($str)) return true;
 
@@ -77,7 +77,7 @@ class PenyewaanRules
     /**
      * Validasi tanggal tidak boleh kemarin (harus >= hari ini)
      */
-    public function tanggal_tidak_kemarin(string $str, string $fields, array $data): bool
+    public function tanggal_tidak_kemarin(string $str, ?string $fields = null, array $data = []): bool
     {
         $inputDate = strtotime($str);
         $today = strtotime(date('Y-m-d'));
@@ -88,8 +88,9 @@ class PenyewaanRules
      * Validasi tanggal kembali harus setelah atau sama dengan tanggal sewa
      * Format: tanggal_setelah[field_tanggal_sewa]
      */
-    public function tanggal_setelah(string $str, string $fields, array $data): bool
+    public function tanggal_setelah(string $str, ?string $fields = null, array $data = []): bool
     {
+        if (!$fields) return true;
         $tanggalSewa = $data[$fields] ?? null;
         if (!$tanggalSewa) return true;
 
@@ -100,8 +101,9 @@ class PenyewaanRules
      * Validasi durasi maksimal (dalam hari)
      * Format: durasi_maksimal[field_tanggal_sewa,max_hari]
      */
-    public function durasi_maksimal(string $str, string $fields, array $data): bool
+    public function durasi_maksimal(string $str, ?string $fields = null, array $data = []): bool
     {
+        if (!$fields) return true;
         $params = explode(',', $fields);
         $tanggalSewa = $data[$params[0]] ?? null;
         $maxHari = (int)($params[1] ?? 7);
@@ -116,8 +118,9 @@ class PenyewaanRules
      * Validasi DP minimal (persentase dari total)
      * Format: dp_minimal[field_total,persentase]
      */
-    public function dp_minimal(string $str, string $fields, array $data): bool
+    public function dp_minimal(string $str, ?string $fields = null, array $data = []): bool
     {
+        if (!$fields) return true;
         $params = explode(',', $fields);
         $total = (float)($data[$params[0]] ?? 0);
         $persentase = (float)($params[1] ?? 30);
@@ -132,9 +135,180 @@ class PenyewaanRules
      * Validasi jumlah bayar tidak lebih dari total
      * Format: tidak_lebih_dari[field_total]
      */
-    public function tidak_lebih_dari(string $str, string $fields, array $data): bool
+    public function tidak_lebih_dari(string $str, ?string $fields = null, array $data = []): bool
     {
+        if (!$fields) return true;
         $total = (float)($data[$fields] ?? 0);
         return (float)$str <= $total;
+    }
+
+    // ============================================
+    // VALIDASI PEMBAYARAN
+    // ============================================
+
+    /**
+     * Cek apakah penyewaan_id ada di database
+     */
+    public function penyewaan_exists(string $str, ?string $fields = null, array $data = []): bool
+    {
+        $db = Database::connect();
+        $result = $db->table('penyewaan')
+            ->where('id_sewa', $str)
+            ->countAllResults();
+        return $result > 0;
+    }
+
+    /**
+     * Cek apakah penyewaan belum lunas
+     */
+    public function penyewaan_belum_lunas(string $str, ?string $fields = null, array $data = []): bool
+    {
+        $db = Database::connect();
+
+        // Ambil total bayar penyewaan
+        $penyewaan = $db->table('penyewaan')
+            ->where('id_sewa', $str)
+            ->get()
+            ->getRowArray();
+
+        if (!$penyewaan) return false;
+
+        // Hitung total yang sudah dibayar
+        $totalDibayar = $db->table('pembayaran')
+            ->selectSum('jumlah_bayar')
+            ->where('id_sewa', $str)
+            ->get()
+            ->getRowArray()['jumlah_bayar'] ?? 0;
+
+        // Masih ada sisa tagihan
+        return ($penyewaan['total_bayar'] - $totalDibayar) > 0;
+    }
+
+    /**
+     * Validasi tanggal bayar tidak boleh lebih dari hari ini
+     */
+    public function tanggal_bayar_valid(string $str, ?string $fields = null, array $data = []): bool
+    {
+        $inputDate = strtotime($str);
+        $today = strtotime(date('Y-m-d'));
+        return $inputDate <= $today;
+    }
+
+    /**
+     * Validasi jumlah bayar tidak melebihi sisa tagihan
+     * Format: tidak_melebihi_sisa[id_sewa_field]
+     */
+    public function tidak_melebihi_sisa(string $str, ?string $fields = null, array $data = []): bool
+    {
+        if (!$fields) return true;
+        $idSewa = $data[$fields] ?? null;
+        if (!$idSewa) return true;
+
+        $db = Database::connect();
+
+        // Ambil total bayar penyewaan
+        $penyewaan = $db->table('penyewaan')
+            ->where('id_sewa', $idSewa)
+            ->get()
+            ->getRowArray();
+
+        if (!$penyewaan) return false;
+
+        // Hitung total yang sudah dibayar
+        $totalDibayar = $db->table('pembayaran')
+            ->selectSum('jumlah_bayar')
+            ->where('id_sewa', $idSewa)
+            ->get()
+            ->getRowArray()['jumlah_bayar'] ?? 0;
+
+        $sisaBayar = $penyewaan['total_bayar'] - $totalDibayar;
+
+        return (float)$str <= $sisaBayar;
+    }
+
+    // ============================================
+    // VALIDASI LAPORAN (FILTER TANGGAL)
+    // ============================================
+
+    /**
+     * Validasi tanggal mulai tidak boleh lebih dari tanggal selesai
+     * Format: tanggal_mulai_valid[tanggal_selesai_field]
+     */
+    public function tanggal_mulai_valid(string $str, ?string $fields = null, array $data = []): bool
+    {
+        if (!$fields) return true;
+        $tanggalSelesai = $data[$fields] ?? null;
+        if (!$tanggalSelesai) return true;
+
+        return strtotime($str) <= strtotime($tanggalSelesai);
+    }
+
+    /**
+     * Validasi rentang tanggal maksimal (dalam hari)
+     * Format: rentang_maksimal[tanggal_mulai_field,max_hari]
+     */
+    public function rentang_maksimal(string $str, ?string $fields = null, array $data = []): bool
+    {
+        if (!$fields) return true;
+        $params = explode(',', $fields);
+        $tanggalMulai = $data[$params[0]] ?? null;
+        $maxHari = (int)($params[1] ?? 365);
+
+        if (!$tanggalMulai) return true;
+
+        $diff = (strtotime($str) - strtotime($tanggalMulai)) / (60 * 60 * 24);
+        return $diff <= $maxHari;
+    }
+
+    /**
+     * Validasi tanggal tidak boleh di masa depan
+     */
+    public function tidak_masa_depan(string $str, ?string $fields = null, array $data = []): bool
+    {
+        $inputDate = strtotime($str);
+        $today = strtotime(date('Y-m-d'));
+        return $inputDate <= $today;
+    }
+
+    // ============================================
+    // VALIDASI PENGEMBALIAN
+    // ============================================
+
+    /**
+     * Cek apakah penyewaan belum dikembalikan
+     */
+    public function penyewaan_belum_kembali(string $str, ?string $fields = null, array $data = []): bool
+    {
+        $db = Database::connect();
+
+        // Cek apakah sudah ada di tabel pengembalian
+        $result = $db->table('pengembalian')
+            ->where('id_sewa', $str)
+            ->countAllResults();
+
+        return $result === 0;
+    }
+
+    /**
+     * Validasi tanggal kembali tidak boleh sebelum tanggal sewa
+     * Format: tanggal_kembali_valid[id_sewa_field]
+     */
+    public function tanggal_kembali_valid(string $str, ?string $fields = null, array $data = []): bool
+    {
+        if (!$fields) return true;
+        $idSewa = $data[$fields] ?? null;
+        if (!$idSewa) return true;
+
+        $db = Database::connect();
+
+        $penyewaan = $db->table('penyewaan')
+            ->where('id_sewa', $idSewa)
+            ->get()
+            ->getRowArray();
+
+        if (!$penyewaan) return false;
+
+        // Tanggal kembali tidak boleh sebelum tanggal sewa
+        return strtotime($str) >= strtotime($penyewaan['tanggal_sewa']);
     }
 }

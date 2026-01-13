@@ -4,25 +4,23 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class PaketPelaminan extends Migration
+class Kategori extends Migration
 {
     public function up()
     {
         $this->forge->addField([
-            'id_paket' => [
+            'id_kategori' => [
                 'type' => 'INT',
+                'constraint' => 11,
                 'auto_increment' => true
             ],
-            'nama_paket' => [
+            'nama_kategori' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100
             ],
             'deskripsi' => [
-                'type' => 'TEXT'
-            ],
-            'harga_paket' => [
-                'type' => 'DECIMAL',
-                'constraint' => '12,2'
+                'type' => 'TEXT',
+                'null' => true
             ],
             'status' => [
                 'type' => 'ENUM',
@@ -31,12 +29,12 @@ class PaketPelaminan extends Migration
             ],
         ]);
 
-        $this->forge->addKey('id_paket', true);
-        $this->forge->createTable('paket_pelaminan');
+        $this->forge->addKey('id_kategori', true);
+        $this->forge->createTable('kategori');
     }
 
     public function down()
     {
-        $this->forge->dropTable('paket_pelaminan');
+        $this->forge->dropTable('kategori');
     }
 }

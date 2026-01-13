@@ -13,6 +13,10 @@ class Pelaminan extends Migration
                 'type' => 'INT',
                 'auto_increment' => true
             ],
+            'id_kategori' => [
+                'type' => 'INT',
+                'null' => true
+            ],
             'nama_pelaminan' => [
                 'type' => 'VARCHAR',
                 'constraint' => 100
@@ -44,6 +48,7 @@ class Pelaminan extends Migration
         ]);
 
         $this->forge->addKey('id_pelaminan', true);
+        $this->forge->addForeignKey('id_kategori', 'kategori', 'id_kategori', 'SET NULL', 'SET NULL');
         $this->forge->createTable('pelaminan');
     }
 

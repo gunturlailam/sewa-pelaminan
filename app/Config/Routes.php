@@ -16,13 +16,13 @@ $routes->get('auth/register', 'Auth::register');
 // Dashboard
 $routes->get('dashboard', 'Home::index');
 
-// Master Paket
-$routes->get('master/paket', 'Master\Paket::index');
-$routes->get('master/paket/create', 'Master\Paket::create');
-$routes->post('master/paket/store', 'Master\Paket::store');
-$routes->get('master/paket/edit/(:num)', 'Master\Paket::edit/$1');
-$routes->post('master/paket/update/(:num)', 'Master\Paket::update/$1');
-$routes->get('master/paket/delete/(:num)', 'Master\Paket::delete/$1');
+// Master Kategori
+$routes->get('master/kategori', 'Master\Kategori::index');
+$routes->get('master/kategori/create', 'Master\Kategori::create');
+$routes->post('master/kategori/store', 'Master\Kategori::store');
+$routes->get('master/kategori/edit/(:num)', 'Master\Kategori::edit/$1');
+$routes->post('master/kategori/update/(:num)', 'Master\Kategori::update/$1');
+$routes->get('master/kategori/delete/(:num)', 'Master\Kategori::delete/$1');
 
 // Master Pelaminan
 $routes->get('master/pelaminan', 'Master\Pelaminan::index');

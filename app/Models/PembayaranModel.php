@@ -10,7 +10,7 @@ class PembayaranModel extends Model
     protected $primaryKey       = 'id_bayar';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $allowedFields    = ['id_sewa', 'tanggal_bayar', 'metode', 'jumlah_bayar', 'status_bayar'];
+    protected $allowedFields    = ['id_sewa', 'tanggal_bayar', 'jumlah_bayar', 'metode_bayar', 'keterangan', 'created_at'];
 
     public function getWithRelations($id = null)
     {

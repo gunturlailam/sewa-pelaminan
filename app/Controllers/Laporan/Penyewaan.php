@@ -26,6 +26,14 @@ class Penyewaan extends BaseController
         $tanggalMulai = $this->request->getGet('tanggal_mulai') ?? date('Y-m-01');
         $tanggalSelesai = $this->request->getGet('tanggal_selesai') ?? date('Y-m-d');
 
+        // ============================================
+        // VALIDASI FILTER TANGGAL
+        // ============================================
+        $errors = $this->validateDateFilter($tanggalMulai, $tanggalSelesai);
+        if (!empty($errors)) {
+            return redirect()->back()->with('error', implode(', ', $errors));
+        }
+
         $penyewaan = $this->penyewaanModel
             ->select('penyewaan.*, users.nama as nama_pelanggan, pelanggan.nik')
             ->join('pelanggan', 'pelanggan.id_pelanggan = penyewaan.id_pelanggan')
@@ -57,6 +65,11 @@ class Penyewaan extends BaseController
             return $this->denyAccess();
         }
 
+        // Validasi ID
+        if (!is_numeric($id) || $id <= 0) {
+            return redirect()->to('/laporan/penyewaan')->with('error', 'ID tidak valid');
+        }
+
         $penyewaan = $this->penyewaanModel
             ->select('penyewaan.*, users.nama as nama_pelanggan, pelanggan.nik, users.no_hp, users.alamat')
             ->join('pelanggan', 'pelanggan.id_pelanggan = penyewaan.id_pelanggan')
@@ -77,5 +90,48 @@ class Penyewaan extends BaseController
         ];
 
         return view('laporan/penyewaan/detail', $data);
+    }
+
+    /**
+     * Validasi filter tanggal
+     */
+    private function validateDateFilter($tanggalMulai, $tanggalSelesai): array
+    {
+        $errors = [];
+
+        // Validasi format tanggal
+        if (!$this->isValidDate($tanggalMulai)) {
+            $errors[] = 'Format tanggal mulai tidak valid';
+        }
+
+        if (!$this->isValidDate($tanggalSelesai)) {
+            $errors[] = 'Format tanggal selesai tidak valid';
+        }
+
+        if (!empty($errors)) {
+            return $errors;
+        }
+
+        // Validasi tanggal mulai tidak lebih dari tanggal selesai
+        if (strtotime($tanggalMulai) > strtotime($tanggalSelesai)) {
+            $errors[] = 'Tanggal mulai tidak boleh lebih dari tanggal selesai';
+        }
+
+        // Validasi rentang maksimal 1 tahun
+        $diff = (strtotime($tanggalSelesai) - strtotime($tanggalMulai)) / (60 * 60 * 24);
+        if ($diff > 365) {
+            $errors[] = 'Rentang tanggal maksimal 1 tahun (365 hari)';
+        }
+
+        return $errors;
+    }
+
+    /**
+     * Cek apakah format tanggal valid
+     */
+    private function isValidDate($date): bool
+    {
+        $d = \DateTime::createFromFormat('Y-m-d', $date);
+        return $d && $d->format('Y-m-d') === $date;
     }
 }

@@ -17,8 +17,8 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="<?= site_url('/master/paket') ?>" class="menu-link">
-                        <div data-i18n="Paket">Paket</div>
+                    <a href="<?= site_url('/master/kategori') ?>" class="menu-link">
+                        <div data-i18n="Kategori">Kategori</div>
                     </a>
                 </li>
                 <li class="menu-item">

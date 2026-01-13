@@ -56,15 +56,13 @@
                                 <td><?= esc($p['nama_pelanggan'] ?? '-') ?></td>
                                 <td><?= date('d/m/Y', strtotime($p['tanggal_bayar'])) ?></td>
                                 <td>
-                                    <span class="badge bg-label-<?= $p['metode'] == 'tunai' ? 'success' : 'info' ?>">
-                                        <?= ucfirst($p['metode']) ?>
+                                    <span class="badge bg-label-<?= $p['metode_bayar'] == 'tunai' ? 'success' : 'info' ?>">
+                                        <?= ucfirst($p['metode_bayar']) ?>
                                     </span>
                                 </td>
                                 <td>Rp <?= number_format($p['jumlah_bayar'], 0, ',', '.') ?></td>
                                 <td>
-                                    <span class="badge bg-label-<?= $p['status_bayar'] == 'lunas' ? 'success' : 'warning' ?>">
-                                        <?= ucfirst($p['status_bayar']) ?>
-                                    </span>
+                                    <span class="badge bg-label-success">Lunas</span>
                                 </td>
                                 <?php if (isAdmin()): ?>
                                     <td>
